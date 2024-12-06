@@ -57,6 +57,7 @@ defmodule Samly.SPHandler do
       {:error, reason} ->
         case idp do
           %IdpData{debug_mode: true} ->
+            Logger.error("Samly consume signin failed with #{inspect(reason)}")
             conn
             |> put_resp_header("content-type", "text/html")
             |> send_resp(403, "<html><body><div><h1>access_denied</h1><p><b>Error:</b><br /><pre><code>#{inspect(reason)}</code></pre></p><p><b>Raw Response:</b><br /><pre><code>#{saml_response}</code></pre></p></div></body></html")
